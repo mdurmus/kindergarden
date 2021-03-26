@@ -1,0 +1,88 @@
+﻿@model IEnumerable<kindergarden.Models.Message>
+@{
+    ViewBag.Title = "DetailMessage";
+    int ownerId = Convert.ToInt32(Session["userId"]);
+}
+
+<div class="col-md-12">
+    <div class="box box-primary direct-chat direct-chat-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Kita365 Kommunikation</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages" style="height:auto !important;">
+                @foreach (var item in Model)
+                {
+                <div class="col-md-12">
+                    @if (item.OwnerId == ownerId)
+                    {
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg right">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-right">@item.sender </span>
+                                <span class="direct-chat-timestamp pull-left">@item.LeaveDate</span>
+                            </div>
+                            <!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="~/Content/img/user1-128x128.jpg" alt="Message User Image" /><!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                                @item.Text
+                                @if (!string.IsNullOrWhiteSpace(item.FullPath))
+                                {
+                                    <a href=@Url.Content(item.FullPath+item.FileName) target="_blank" style="color:red;">Zeige Datei</a>
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                    }
+                    else
+                    {
+                        <div class="direct-chat-msg">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-left">@item.sender </span>
+                                <span class="direct-chat-timestamp pull-right">@item.LeaveDate.ToString()</span>
+                            </div>
+                            <!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="~/Content/img/user1-128x128.jpg" alt="Message User Image" />
+                            <!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                                @item.Text
+                                @if (!string.IsNullOrWhiteSpace(item.FullPath))
+                                {
+                                <a href=@Url.Content(item.FullPath+item.FileName) target="_blank">Zeige Datei</a>
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        @*<h5>ogretmenin mesaji</h5>
+            <p>@item.Text</p>*@
+                    }
+                </div>
+                }
+            </div>
+            <!--/.direct-chat-messages-->
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            @using (Html.BeginForm("OnlySendMessage", "Message", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="control-label">Text</label>
+                    <input type="text" required name="Text" placeholder="Type Message ..." class="form-control">
+                    <input type="hidden" name="PersonMessageId" value="@Model.First().PersonMessage.Id" />
+                    <input type="hidden" name="personId" value="@Model.First().PersonMessage.Sender.Id" />
+                </div>
+                <input type="file" name="file" class="form-control" /><br />
+                <div class="col-md-2">@Html.ActionLink("Zurück", "MyMessage", "Message",new {@class="btn btn-danger btn-block"})</div>
+                <div class="col-md-10"><button type="submit" class="btn btn-primary btn-block">Senden</button></div>
+                
+            }
+        </div>
+    </div>
+    <!-- /.box-footer-->
+</div>

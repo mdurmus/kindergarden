@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "CreateGallery";
+}
+
+<div class="col-md-12">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Galerie erstellen</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        @using (Html.BeginForm("CreateGallery", "AdminUser",FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="galleryName" class="control-label">Name</label>
+                    <input type="text" class="form-control" required name="name">
+                </div>
+                <div class="form-group">
+                    <label for="pictures">Bilder</label>
+                    <input type="file" required name="pictures" multiple accept="*.jpg, *.jpeg">
+
+                    <p class="help-block">Nur jpg types and 3 datein.</p>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary btn-block">Galerie erstellen</button>
+            </div>
+        }
+    </div>
+</div>

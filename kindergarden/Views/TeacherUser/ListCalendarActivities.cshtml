@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "ListCalendarActivities";
+}
+
+<div class="col-md-12">
+    <div id="takvim" class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Kalender</h3>
+        </div>
+        <div class="box-body">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/fullcalendar.js"></script>
+    <script src="~/Scripts/de.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                    defaultDate: moment(),
+                    defaultView: 'month',
+                    slotLabelFormat: 'HH:mm',
+                    axisFormat: 'h:mm a',
+                    editable: false,
+                    allDay: false,
+                    allDaySlot: false,
+                    minTime: '08:00:00',
+                    maxTime: '20:00:00',
+                    hiddenDays: [0],
+                    navLinks: true,
+                    eventLimit: true,
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    //views: {
+                    //    day: { titleFormat: 'DD MMM YY ddd' },
+                    //    //month: { buttonText: 'Aylık Görünüm' }
+                    //},
+                    events: {
+                        url: '@Url.Action("ListCalendarAktivitet", "TeacherUser")',
+                        type: 'GET',
+                        //data: function () { return { persId: $('#Personal :selected').val() } },
+                        error: function () {
+                            alert("Hata Oluştu");
+                        }
+                    }
+                });
+
+
+        })
+    </script>
+
+}

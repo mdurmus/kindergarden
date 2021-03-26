@@ -1,0 +1,31 @@
+﻿@model IEnumerable<kindergarden.Models.gallery>
+@{
+    ViewBag.Title = "Galleries";
+}
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Galerie</h3>
+        </div>
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Prozess</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.name</td>
+                            <td>
+                                <a href="@Url.Action("ShowGallery","AdminUser", new {galleryId=item.Id })" class="btn btn-primary">Fotos</a>
+                                <a href="@Url.Action("DeleteGallery","AdminUser", new {galleryId=item.Id })" class="btn btn-danger">Löschen</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

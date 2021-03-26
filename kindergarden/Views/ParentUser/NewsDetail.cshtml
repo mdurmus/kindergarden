@@ -1,0 +1,32 @@
+﻿@model news
+@{
+    ViewBag.Title = "NewsDetail";
+}
+<div class="col-md-12">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <i class="fa fa-bullhorn"></i>
+            <h3 class="box-title">@Model.subject</h3>
+        </div>
+        <div class="box-body">
+            <p>@Model.newsText</p>
+            <div class="col-md-12">
+                @if (Model.url != null)
+                {
+                    <div class="col-md-6">
+                        <p> <a href="@Model.url" target="_blank" class="btn btn-primary btn-block">Öffnen link</a></p>
+                    </div>
+                }
+                @if (Model.filePath != null)
+                {
+                    <div class="col-md-6">
+                        <p><a href="@Url.Content(Model.filePath)" target="_blank" class="btn btn-success btn-block">Lesen Date</a></p>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="box-footer">
+            <a href="@Url.Action("AllNews","ParentUser")" class="btn btn-block btn-danger">zurück</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Person>
+@{
+    ViewBag.Title = "PendingApprove";
+}
+
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Wait Approve Admin Users</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>GSM</th>
+                            <th>Password</th>
+                            <th>Process</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name @item.LastName</td>
+                                <td>@item.Email</td>
+                                <td><a href="tel:@item.Gsm" target="_blank">@item.Gsm</a></td>
+                                <td>@item.Pass</td>
+                                <td>
+                                    @Html.ActionLink("Approve", "ApproveAdmin", "MasterUser", new { Id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Reject", "RejectAdmin", "MasterUser", new { Id = item.Id }, htmlAttributes: new { @class = "btn btn-danger" })
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>

@@ -1,0 +1,132 @@
+﻿@model IEnumerable<news>
+@{
+    ViewBag.Title = "AdminPage";
+}
+
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Ihre Aktivierungsschlüssel</h3> <p class="pull-right" style="font-weight:bold;font-size:large"> @ViewBag.GUID</p>
+            </div>
+        </div>
+    </div>
+<div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-aqua">
+        <div class="inner">
+            <h3>@ViewBag.Activities</h3>
+
+            <p>Aktivitäten</p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-universal-access"></i>
+        </div>
+        <a href="@Url.Action("ListActivities","AdminUser")" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+</div>
+<!-- ./col -->
+<div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-green">
+        <div class="inner">
+            <h3>@ViewBag.News</h3>
+
+            <p>Mitteilungen</p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-newspaper-o"></i>
+        </div>
+        <a href="@Url.Action("ListNews","AdminUser")" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+</div>
+<!-- ./col -->
+<div class="col-md-4">
+    <!-- small box -->
+    <div class="small-box bg-yellow">
+        <div class="inner">
+            <h3>@ViewBag.Calendar</h3>
+
+            <p>Kalender Aktivität erstellen</p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-users"></i>
+        </div>
+        <a href="@Url.Action("ListCalendarActivitiy","AdminUser")" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+</div>
+<!-- ./col -->
+
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Wichtige Mitteilungen</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Priorität</th>
+                            <th>Thema</th>
+                            <th>Link</th>
+                            <th>Daten</th>
+                            <th>Text</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                    <tr>
+                        <td style="width:20%;">
+                            @if (item.priority == Priority.Prio0)
+                            {
+                                <span class="label label-danger center-block">Hohe Prio.</span>
+                            }
+                            else if (item.priority == Priority.Prio1)
+                            {
+                                <span class="label label-warning center-block">Normal Prio.</span>
+                            }
+                            else
+                            {
+                                <span class="label label-success center-block">Niedrige Prio.</span>
+                            }
+                        </td>
+                        <td>@item.subject</td>
+                        <td>
+                            @if (item.url != null)
+                            {
+                                <a href="@item.url" target="_blank" class="btn btn-primary btn-xs">Link</a>
+                            }
+                            else
+                            {
+                                <p>---</p>
+                            }
+                        </td>
+                        <td>
+                            @if (item.filePath != null)
+                            {
+                                <a href="@Url.Content(item.filePath)" class="btn btn-warning btn-xs" target="_blank">Daten</a>
+                            }
+                            else
+                            {
+                                <p>---</p>
+                            }
+                        </td>
+                        <td width="60%">
+                            @if (item.newsText != null && item.newsText.Length>50)
+                            {
+                                @item.newsText.Substring(0,50)
+                            }
+                            else
+                            {
+                                @item.newsText
+                            }
+
+                        </td>
+                    </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>

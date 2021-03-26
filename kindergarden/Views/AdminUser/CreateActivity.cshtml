@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "CreateActivity";
+}
+
+<div class="col-md-12">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Aktivität erstellen</h3>
+        </div>
+        @using (Html.BeginForm("CreateActivity", "AdminUser", FormMethod.Post, new { enctype = "multipart/form-data"}))
+        {
+            @Html.AntiForgeryToken()
+    <div class="box-body">
+        <div class="form-group">
+            <label for="subject">Thema</label>
+            <input type="text" class="form-control" required name="subject">
+        </div>
+        <div class="form-group">
+            <label for="miniText">Mini Text</label>
+            <input type="text" class="form-control" required name="miniText">
+        </div>
+        <div class="form-group">
+            <label for="fullText">Full Text</label>
+            <input type="text" class="form-control"  name="fullText">
+        </div>
+        <div class="form-group">
+            <label for="adminText">Admin Text</label>
+            <input type="text" class="form-control"  name="adminText">
+        </div>
+        <div class="form-group">
+            <label for="startDate">Startdatum</label>
+            <input type="date" class="form-control" required name="startDate">
+        </div>
+        <div class="form-group">
+            <label for="finishDate">Enddatum</label>
+            <input type="date" class="form-control" required name="finishDate">
+        </div>
+        <div class="form-group">
+            <label for="location">Ort der Aktivität</label>
+            <input type="text" class="form-control" name="location">
+        </div>
+        <div class="form-group">
+            <label for="pictures">Bilder</label>
+            <input type="file" name="pictures" multiple accept="*.jpg, *.jpeg">
+
+            <p class="help-block">Max. 3 JPG-Typen einfügen.</p>
+        </div>
+    </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary btn-block">Aktivität erstellen</button>
+            </div>
+        }
+    </div>
+</div>

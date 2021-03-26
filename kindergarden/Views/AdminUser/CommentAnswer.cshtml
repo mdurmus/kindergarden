@@ -1,0 +1,25 @@
+﻿<div class="col-md-12">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Nachricht Antwort</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+
+        @using (Html.BeginForm("CommentAnswer", "AdminUser", FormMethod.Post))
+        {
+            <div class="box-body">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="control-label">Nachricht</label>
+                    <textarea class="form-control" name="messageText" rows="5" cols="5"></textarea>
+                </div>
+                <input type="hidden" name="activitiesMessageId" value="@ViewBag.activityMessageId" />
+                <input type="hidden" name="activitiesId" value="@ViewBag.ActivityId" />
+            </div>
+            <div class="box-footer">
+                <input type="submit" class="btn btn-primary btn-block" value="Speichren" />
+            </div>
+        }
+    </div>
+</div>

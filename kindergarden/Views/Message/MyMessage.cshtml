@@ -1,0 +1,102 @@
+﻿@model IEnumerable<kindergarden.ViewModels.PersonMessageVM>
+
+@{
+    ViewBag.Title = "My Message";
+}
+
+<div class="col-md-12">
+    <div class="col-md-4">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Nachrichten</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            @using (Html.BeginForm("SendMessage", "Message", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="box-body">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label class="control-label">An</label>
+                        @Html.DropDownList("PersonId", (ViewBag.SendPerson as SelectList), new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Text" class="control-label">Text</label>
+                        <textarea style="resize:none;" name="Text" required class="form-control" rows="8" cols="6"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pictures">Daten</label>
+                        <input type="file" id="file" class="form-control" name="file" accept="*.jpg, *.jpeg, *.pdf">
+                        <p class="help-block">Nur jpg, word und pdf datein.</p>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary btn-block">Senden</button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-md-8">
+        @if (Model != null)
+        {
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Ihre Nachrichten</h3>
+
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Benutzer</th>
+                                    <th>Nachricht Gelesen</th>
+                                    <th>Detail</th>
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td> @item.User </td>
+                                        <td>
+                                            @if (item.IsUnread == true)
+                                            {
+                                                <span class="label label-primary">Ja</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-danger">Nein</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Detail","DetailMessage","Message",new {personMessageId=item.PersonMessageId },new {@class="btn btn-warning" })
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        }
+        else
+        {
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Keine Daten!</h3>
+                </div>
+                <div class="box-body">
+                    <p></p>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        }
+
+    </div>
+</div>

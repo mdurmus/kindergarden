@@ -1,0 +1,30 @@
+﻿@model IEnumerable<activitiesMessage>
+
+<div class="direct-chat-messages">
+    <!-- Message. Default to the left -->
+    @foreach (var item in Model)
+    {
+        <div class="direct-chat-msg">
+            <div class="direct-chat-info clearfix">
+                <span class="direct-chat-name pull-left">@item.messageOwner</span>
+                <span class="direct-chat-timestamp pull-right">@item.messageDate.ToShortDateString()</span>
+            </div>
+            <!-- /.direct-chat-info -->
+            <div class="direct-chat-text">
+                @item.messageText
+            </div>
+            <!-- /.direct-chat-text -->
+        </div>
+    }
+
+    <!-- /.direct-chat-msg -->
+</div>
+
+
+
+
+
+@*@foreach (var item in Model)
+    {
+        <p>@item.messageText</p>
+    }*@

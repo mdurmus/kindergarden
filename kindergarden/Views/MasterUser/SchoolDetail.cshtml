@@ -1,0 +1,229 @@
+﻿@model kindergarden.Models.School
+@{
+    ViewBag.Title = "School Detail";
+}
+
+<div class="col-md-12">
+    <div class="col-md-3">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@Model.person.Where(p => p.IsAdmin == true).Count()</h3>
+
+                <p>Manager</p>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-md-3">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@Model.person.Where(p => p.IsTeacher == true).Count()</h3>
+
+                <p>Erzieher</p>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-md-3">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>@Model.person.Where(p => p.IsParent == true).Count()</h3>
+
+                <p>Eltern</p>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-md-3">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>@Model.CreatedDate.ToString("dd.MM.yyyy")</h3>
+                <p>Registrieren Datum</p>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>
+
+<div class="col-md-12">
+    <div class="col-md-6">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <i class="fa fa-text-width"></i>
+                <h3 class="box-title">Schule Information</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <dl>
+                    <dt>Kita Name</dt>
+                    <dd>@Model.Name</dd>
+                    <dt>Schule bezahlen</dt>
+                    @if (Model.IsPayWillSchool == true)
+                    {
+                        <dd style="color:darkgreen;">Ja</dd>
+                    }
+                    else
+                    {
+                        <dd style="color:red;">Nein</dd>
+                    }
+                    <dt>Kita Schlüssel</dt>
+                    <dd>@Model.schoolGuid</dd>
+                    <dt>E-mail</dt>
+                    <dd><a href="mailto:@Model.Email" target="_blank">@Model.Email</a></dd>
+                    <dt>Telefonnummer</dt>
+                    <dd><a href="tel:@Model.Phone" target="_blank">@Model.Phone</a></dd>
+                </dl>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <i class="fa fa-text-width"></i>
+                <h3 class="box-title">Address Information</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <dl>
+                    <dt>Kita Bundesland</dt>
+                    <dd>@Model.State</dd>
+                    <dt>Kita Stadt</dt>
+                    <dd>@Model.City</dd>
+                    <dt>Kita PLZ</dt>
+                    <dd>@Model.PostalCode</dd>
+                    <dt>Nummer</dt>
+                    <dd>@Model.Number</dd>
+                    <dt>Telefonnummer</dt>
+                    <dd><a href="tel:@Model.Phone" target="_blank">@Model.Phone</a></dd>
+                </dl>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Alle Manager</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Nachname</th>
+                        <th>Telefon</th>
+                        <th>E-mail</th>
+                        <th>Registrieren</th>
+                    </tr>
+                    @foreach (var item in Model.person.Where(p => p.IsAdmin == true))
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.LastName</td>
+                            <td><a href="tel:@item.Gsm" target="_blank">@item.Gsm</a></td>
+                            <td><a href="tel:@item.Email" target="_blank">@item.Email</a></td>
+                            <td>@item.CreatedDate.ToString("dd.MM.yyyy")</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Alle Erzieher</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Nachname</th>
+                        <th>Telefon</th>
+                        <th>E-mail</th>
+                        <th>Registrieren</th>
+                    </tr>
+                    @foreach (var item in Model.person.Where(p => p.IsTeacher == true))
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.LastName</td>
+                            <td><a href="tel:@item.Gsm" target="_blank">@item.Gsm</a></td>
+                            <td><a href="tel:@item.Email" target="_blank">@item.Email</a></td>
+                            <td>@item.CreatedDate.ToString("dd.MM.yyyy")</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Alle Eltern</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Nachname</th>
+                        <th>Telefon</th>
+                        <th>E-mail</th>
+                        <th>Registrieren</th>
+                    </tr>
+                    @foreach (var item in Model.person.Where(p => p.IsTeacher == true))
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.LastName</td>
+                            <td><a href="tel:@item.Gsm" target="_blank">@item.Gsm</a></td>
+                            <td><a href="tel:@item.Email" target="_blank">@item.Email</a></td>
+                            <td>@item.CreatedDate.ToString("dd.MM.yyyy")</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+
+<div class="col-md-12">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <i class="fa fa-warning"></i>
+
+            <h3 class="box-title">Alerts</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @Html.ActionLink("Löschen Kita", "DeleteSchoolWithRecords", "MasterUser", new { schoolId = Model.SchoolId }, new { @class = "btn btn-danger btn-block", onclick = "return confirm('Hepsini silcem bi sakat olmasin!!')" })
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>

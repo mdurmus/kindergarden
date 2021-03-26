@@ -1,0 +1,68 @@
+﻿@model IEnumerable<news>
+
+@{
+    ViewBag.Title = "List News";
+}
+@if (Model.Count() > 0)
+{
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Alle Mitteilungen</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Priorität</th>
+                            <th>Thema</th>
+                            <th>Link</th>
+                            <th>Daten</th>
+                            <th>Text</th>
+                            <th>Prozess</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (item.priority == Priority.Prio0)
+                                    {<span class="label label-danger">Prio0</span>}
+                                    else if (item.priority == Priority.Prio1)
+                                    {<span class="label label-warning">Prio1</span>}
+                                </td>
+                                <td>@item.subject</td>
+                                <td>
+                                    @if (item.url != null)
+                                    {<a href="@item.url" target="_blank" class="btn btn-primary btn-xs">Link</a>}
+                                    else
+                                    {<p>---</p>}
+                                </td>
+                                <td>
+                                    @if (item.filePath != null)
+                                    {
+                                        <a href="@Url.Content(item.filePath)" class="btn btn-warning btn-xs" target="_blank">Daten</a>}
+                                    else
+                                    {<p>---</p>}
+                                </td>
+                                <td width="60%">@item.newsText</td>
+                                <td>
+                                    <a href="@Url.Action("DeleteNews", "AdminUser", new {id=item.Id })" onclick="return confirm('Sind Sie sicher?')" class="btn btn-sm btn-danger">Löschen</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Keine Daten!</h3>
+            </div>
+        </div>
+    </div>
+}

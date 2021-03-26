@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Chat";
+}
+
+<div class="col-md-12">
+    <div class="box box-danger direct-chat direct-chat-danger">
+        <div class="box-header with-border">
+            <i class="fa fa-bullhorn"></i>
+            <h3 class="box-title">Chat Area</h3>
+        </div>
+        <div class="box-body">
+            <input type="hidden" id="displayname" value="@ViewBag.name" />
+            <div id="discussion" style="transform: rotate(180deg);overflow:hidden !important;" class="direct-chat-messages">
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="input-group">
+                <input type="text" class="form-control" id="message" placeholder="Type Message" />
+                <span class="input-group-btn">
+                    <button class="btn btn-primary btn-block" id="sendmessage">Send</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var chat = $.connection.chatHub;
+            chat.client.addNewMessageToPage = function (name, message) {
+                if (name == $('#displayname').val()) {
+                    $('#discussion').prepend('<div class="direct-chat-msg right" style="transform: rotate(180deg);"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">' + htmlEncode(name) + '  ' + '</span></div><div class="direct-chat-text">' + htmlEncode(message) + '</div></div>');
+                }
+                else {
+                    $('#discussion').prepend('<div class="direct-chat-msg" style="transform: rotate(180deg);"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">' + htmlEncode(name) + '  ' + '</span></div><div class="direct-chat-text">' + htmlEncode(message) + '</div></div>');
+                }
+
+            };
+            $('#message').focus();
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    chat.server.send($('#displayname').val(), $('#message').val());
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}

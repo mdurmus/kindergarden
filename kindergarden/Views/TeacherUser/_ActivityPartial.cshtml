@@ -1,0 +1,18 @@
+﻿@model IEnumerable<activitiesMessage>
+    
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <div class="box box-warning box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">@item.messageOwner</h3>
+                <div class="box-tools pull-right">
+                   <span>@item.messageDate.ToString()</span>
+                </div>
+            </div>
+            <div class="box-body">
+                @item.messageText
+            </div>
+        </div>
+    </div>
+}

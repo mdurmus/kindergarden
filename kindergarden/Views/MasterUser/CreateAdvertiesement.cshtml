@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "CreateAdvertiesement";
+}
+
+<div class="col-md-12">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Create Advertiesement</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        @using (Html.BeginForm("CreateAdvertiesement", "MasterUser", FormMethod.Post, new {enctype = "multipart/form-data", @novalidate = "novalidate"}))
+        {
+            @Html.AntiForgeryToken()
+    <div class="box-body">
+        <div class="form-group">
+            <label for="companyName" class="control-label">Company Name</label>
+            <input type="text" name="companyName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="url" class="control-label">Company URL</label>
+            <input type="text" name="url" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="mapsLink" class="control-label">Maps Link</label>
+            <input type="text" name="mapsLink" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="startDate" class="control-label">Start Date</label>
+            <input type="date" name="startDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="finishDate" class="control-label">Finish Date</label>
+            <input type="date" name="finishDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="file">Picture File</label>
+            <input type="file" id="file" name="file" accept="*.jpg, *.jpeg" >
+            <p class="help-block">Only JPG Files and 1280x500</p>
+        </div>
+    </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="col-md-12 btn btn-info pull-right">Create Advertiesement</button>
+            </div>
+            <!-- /.box-footer -->
+        }
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿@model personMessage
+
+@{
+    ViewBag.Title = Model.sender + "Message";
+}
+<div class="col-md-12">
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Von: @Model.Sender</h3>
+        </div>
+        <div class="box-body">
+            <p>Empfangsdatum: @Model.messageDate</p>
+            <p>Nachricht: @Model.messageText</p>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("DeleteMessage","AdminUser",new {messageId=Model.Id })" class="btn btn-danger" onclick="return confirm('Sind Sie sicher?')">Nacricht löschen</a>
+            <a href="@Url.Action("MyMessages","AdminUser")" class="btn btn-primary pull-right">Zürück</a>
+        </div>
+    </div>
+
+</div>

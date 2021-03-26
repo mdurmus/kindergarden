@@ -1,0 +1,51 @@
+﻿@model IEnumerable<kindergarden.Models.LogRecord>
+@{
+    ViewBag.Title = "ListLogin";
+}
+
+
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Last Logins</h3>
+
+            <div class="box-tools">
+                @using (Html.BeginForm("ListLogin","MasterUser",FormMethod.Get))
+                {
+                <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                    <input type="date" name="date" class="form-control pull-right" formnovalidate="formnovalidate" placeholder="Search">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                }
+                
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Schule Name</th>
+                        <th>Rolle</th>
+                        <th>Vor-Nach Name</th>
+                        <th>Datum</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.SchoolName</td>
+                            <td>@item.Role</td>
+                            <td>@item.Login</td>
+                            <td>@item.LoginTime</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
