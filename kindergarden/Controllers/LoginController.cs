@@ -38,7 +38,7 @@ namespace kindergarden.Controllers
             {
                 //false ise login olunmus demektir.
                 bool result = CheckUserLogedIn(model.Id);
-                if (result == true)
+               if (result == true)
                 {
                     if (model.Addresses.Count() == 0)
                     {
@@ -56,7 +56,7 @@ namespace kindergarden.Controllers
                         Session["userId"] = model.Id;
                         Session["schoolId"] = model.SchoolId;
                         CreateLoggingRecord(model, "Leitung");
-                        CreateActiveUser(model);
+                        //CreateActiveUser(model);
                         return RedirectToAction("AdminPage", "Home");
                     }
                     //master kullanicisi demektir
@@ -77,7 +77,7 @@ namespace kindergarden.Controllers
                         Session["userId"] = model.Id;
                         Session["schoolId"] = model.SchoolId;
                         CreateLoggingRecord(model, "Erzieher");
-                        CreateActiveUser(model);
+                        //CreateActiveUser(model);
                         return RedirectToAction("TeacherPage", "Home");
                     }
                     else
@@ -88,7 +88,7 @@ namespace kindergarden.Controllers
                         Session["userId"] = model.Id;
                         Session["schoolId"] = model.SchoolId;
                         CreateLoggingRecord(model, "Eltern");
-                        CreateActiveUser(model);
+                        //CreateActiveUser(model);
                         return RedirectToAction("ParentPage", "Home");
                     }
                 }
@@ -161,13 +161,13 @@ namespace kindergarden.Controllers
         //Tüm session nesnelerini kapatiyorum.
         public ActionResult Logout()
         {
-            int userId = Convert.ToInt32(Session["userId"]);
+            //int userId = Convert.ToInt32(Session["userId"]);
             Session.Clear();
             Session.Abandon();
-            if (userId !=0)
-            {
-                RemoveActiveUser(userId);
-            }
+            //if (userId !=0)
+            //{
+            //    RemoveActiveUser(userId);
+            //}
             return RedirectToAction("Login", "Login");
         }
 
