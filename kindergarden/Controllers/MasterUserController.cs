@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -83,6 +85,7 @@ namespace kindergarden.Controllers
             model.IsAdmin = true;
             CreateSchoolFiles((int)model.SchoolId);
             db.SaveChanges();
+            SendAcceptNotificationEmailToAdmin(model.Email);
             return RedirectToAction("PendingApprove");
         }
 
@@ -210,9 +213,9 @@ namespace kindergarden.Controllers
 
         private void DeletePersonAddressByPersonId(int personId)
         {
-            var personAddress = db.Addresses.Where(p => p.PersonId == personId).ToList();
-            db.Addresses.RemoveRange(personAddress);
-            db.SaveChanges();
+           // var personAddress = db.Addresses.Where(p => p.PersonId == personId).ToList();
+           // db.Addresses.RemoveRange(personAddress);
+           // db.SaveChanges();
         }
 
         private void DeleteActivitiesBySchoolId(int schoolId)
@@ -253,6 +256,29 @@ namespace kindergarden.Controllers
             var model = db.AnswerActivityMessages.Where(p => p.activitiesMessageId == activityMessageId).ToList();
             db.AnswerActivityMessages.RemoveRange(model);
             db.SaveChanges();
+        }
+
+        public void SendAcceptNotificationEmailToAdmin(string email)
+        {
+            MailMessage ePosta = new MailMessage();
+            ePosta.From = new MailAddress("info@kita365.de");
+            ePosta.To.Add(email);
+            ePosta.Subject = "Willkommen bei Kita365";
+            ePosta.Body = @"<h3>Ihr Account wurde Freigeschaltet, wir wünschen Ihnen viel Spaß bei der Benutzung.</h3>";
+            ePosta.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            NetworkCredential networkCredential = new NetworkCredential("info@kita365.de", "Kita123?");
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = networkCredential;
+            smtp.Port = 587;
+            smtp.Host = "smtp.ionos.de";
+            smtp.EnableSsl = true;
+            object userState = ePosta;
+            try { smtp.Send(ePosta); }
+            catch (Exception e)
+            {
+                string hata = e.Message;
+            }
         }
 
         protected override void Dispose(bool disposing)

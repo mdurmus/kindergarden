@@ -18,7 +18,6 @@
                             <th>Email</th>
                             <th>Name</th>
                             <th>Familienname</th>
-                            <th>Telefonnumer</th>
                             <th>Prozess</th>
                         </tr>
                         @foreach (var item in Model)
@@ -27,7 +26,6 @@
                                 <td>@item.Email</td>
                                 <td>@item.Name</td>
                                 <td>@item.LastName</td>
-                                <td><a href="tel:@item.Gsm" target="_blank">@item.Gsm</a></td>
                                 <td>
                                     <a href="@Url.Action("ResetTeacherPassword","AdminUser",new {parentId=item.Id })" onclick="return confirm('Sind Sie sicher?')" class="btn btn-warning">Passwort zurücksetzen</a> |
                                     <a href="@Url.Action("DeleteTeacher","AdminUser",new {Id=item.Id })" onclick="return confirm('Sind Sie sicher?')" class="btn btn-danger">Löschen</a>

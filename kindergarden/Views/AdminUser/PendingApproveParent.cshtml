@@ -9,7 +9,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Alle Eltern</h3>
+                <h3 class="box-title">Eltern freischalten</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
@@ -19,7 +19,7 @@
                             <th>Email</th>
                             <th>Name</th>
                             <th>Familienname</th>
-                            <th>Telefonnumer</th>
+
                             <th>Prozess</th>
                         </tr>
                         @foreach (var item in Model)
@@ -28,8 +28,6 @@
                                 <td>@item.Email</td>
                                 <td>@item.Name</td>
                                 <td>@item.LastName</td>
-                                <td><a href="tel:@item.Gsm" target="_blank">@item.Gsm</a></td>
-
                                 <td>
                                     <a href="@Url.Action("ApproveParent","AdminUser",new {parentId=item.Id })" onclick="return confirm('Sind Sie sicher?')" class="btn btn-warning">Freischalten</a> |
                                     <a href="@Url.Action("DenyParent","AdminUser",new {parentId=item.Id })" onclick="return confirm('Sind Sie sicher?')" class="btn btn-danger">Nicht Freischalten</a>

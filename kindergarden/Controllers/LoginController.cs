@@ -33,17 +33,18 @@ namespace kindergarden.Controllers
         [HttpPost]
         public ActionResult Login(string email, string pass)
         {
-            var model = db.person.Include("Addresses").Where(p => p.Email == email && p.Pass == pass && p.IsActive == true).FirstOrDefault();
+            //Burada adressde eklenmisdi .Include("Address")
+            var model = db.person.Where(p => p.Email == email && p.Pass == pass && p.IsActive == true).FirstOrDefault();
             if (model != null)
             {
                 //false ise login olunmus demektir.
                 bool result = CheckUserLogedIn(model.Id);
                 if (result == true)
                 {
-                    if (model.Addresses.Count() == 0)
-                    {
-                        return RedirectToAction("PersonDetail", new { personId = model.Id });
-                    }
+                    //if (model.Addresses.Count() == 0)
+                    //{
+                    //    return RedirectToAction("PersonDetail", new { personId = model.Id });
+                    //}
                     if (model.Pass == "1234")
                     {
                         return RedirectToAction("SetPassword", "Login", new { email = model.Email });
@@ -225,7 +226,7 @@ namespace kindergarden.Controllers
             ePosta.To.Add("bykingpin@gmail.com");
             ePosta.To.Add("heuseyin1986@gmail.com");
             ePosta.Subject = "Kita Yeni okul kaydoldu";
-            ePosta.Body = @"okul Adi: " + data.School.Name + "<br> okulmu ödeyecek: " + data.School.IsPayWillSchool + "<br> okul telefonu: <a href='tel:" + data.School.Phone + " 'target='_blank'>" + data.School.Phone + "</a> <br><hr> admin adi: " + data.Person.Name + "<br> admin soyadi: " + data.Person.LastName + "<br> Admin telefonu <a href='tel:" + data.Person.Gsm + " 'target='_blank'>" + data.Person.Gsm + "</a>";
+            ePosta.Body = @"okul Adi: " + data.School.Name + "<br> okulmu ödeyecek: " + data.School.IsPayWillSchool + "<br> okul telefonu: <a href='tel:" + data.School.Phone + " 'target='_blank'>" + data.School.Phone + "</a> <br><hr> admin adi: " + data.Person.Name + "<br> admin soyadi: " + data.Person.LastName;
             ePosta.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient();
@@ -241,28 +242,7 @@ namespace kindergarden.Controllers
         }
 
         
-        public void SendEmailToUser(string email)
-        {
-            MailMessage ePosta = new MailMessage();
-            ePosta.From = new MailAddress("info@kita365.de");
-            ePosta.To.Add("bykingpin@gmail.com");
-            ePosta.To.Add("heuseyin1986@gmail.com");
-            ePosta.Subject = "Willkommen bei Kita365";
-            ePosta.Body = @"<h3>Ihr Account wurde Freigeschaltet, wir wünschen Ihnen viel Spaß bei der Benutzung.</h3>";
-            ePosta.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient();
-            NetworkCredential networkCredential = new NetworkCredential("info@kita365.de", "Kita123?");
-            smtp.UseDefaultCredentials = true;
-            smtp.Credentials = networkCredential;
-            smtp.Port = 587;
-            smtp.Host = "smtp.ionos.de";
-            smtp.EnableSsl = true;
-            object userState = ePosta;
-            try { smtp.Send(ePosta); }
-            catch (Exception e) {
-                string hata = e.Message;
-            }
-        }
+      
 
 
 
@@ -311,7 +291,7 @@ namespace kindergarden.Controllers
                 model.SchoolId = schoolId;
                 db.person.Add(model);
                 db.SaveChanges();
-                SendEmailToUser(model.Email);
+                
                 return RedirectToAction("Thanks", new { person = model.Name + " " + model.LastName });
             }
             ModelState.AddModelError("GUID", "Bitte prüfen Aktivierungsschlüssel");
@@ -331,7 +311,7 @@ namespace kindergarden.Controllers
                 model.SchoolId = schoolId;
                 db.person.Add(model);
                 db.SaveChanges();
-                SendEmailToUser(model.Email);
+              
                 return RedirectToAction("Thanks", new { person = model.Name + " " + model.LastName });
             }
             ModelState.AddModelError("GUID", "Bitte prüfen Aktivierungsschlüssel");
@@ -356,31 +336,30 @@ namespace kindergarden.Controllers
                 model.SchoolId = schoolId;
                 db.person.Add(model);
                 db.SaveChanges();
-                SendEmailToUser(model.Email);
                 return RedirectToAction("Thanks", new { person = model.Name + "" + model.LastName });
             }
             ModelState.AddModelError("GUID", "Bitte prüfen Aktivierungsschlüssel");
             return View(model);
         }
 
-        public ActionResult PersonDetail(int personId)
-        {
-            ViewBag.PersonId = personId;
-            return View();
-        }
+        //public ActionResult PersonDetail(int personId)
+        //{
+        //    ViewBag.PersonId = personId;
+        //    return View();
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PersonDetail(Address address)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Addresses.Add(address);
-                db.SaveChanges();
-                return View("Login");
-            }
-            return View(address);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult PersonDetail(Address address)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //       // db.Addresses.Add(address);
+        //        db.SaveChanges();
+        //        return View("Login");
+        //    }
+        //    return View(address);
+        //}
 
 
 

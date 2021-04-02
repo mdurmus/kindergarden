@@ -27,8 +27,8 @@ namespace kindergarden
         [StringLength(50)]
         public string Email { get; set; }
 
-        [StringLength(100)]
-        public string Gsm { get; set; }
+       // [StringLength(100)]
+       // public string Gsm { get; set; }
 
         [StringLength(50)]
         public string Pass { get; set; }

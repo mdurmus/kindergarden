@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using kindergarden.Filters;
@@ -98,6 +100,7 @@ namespace kindergarden.Controllers
             var model = db.person.Find(parentId);
             model.IsActive = true;
             db.SaveChanges();
+            SendAcceptNotificationEmailToUser(model.Email);
             return RedirectToAction("PendingApproveParent");
         }
         public ActionResult DenyParent(int parentId)
@@ -132,6 +135,7 @@ namespace kindergarden.Controllers
             var model = db.person.Find(teacherId);
             model.IsActive = true;
             db.SaveChanges();
+            SendAcceptNotificationEmailToUser(model.Email);
             return RedirectToAction("PendingApproveTeacher");
         }
         public ActionResult DenyTeacher(int teacherId)
@@ -344,7 +348,7 @@ namespace kindergarden.Controllers
             if (ModelState.IsValid)
             {
                 Person newper = new Person();
-                newper.Gsm = per.Gsm;
+                //newper.Gsm = per.Gsm;
                 newper.IsActive = true;
                 newper.IsParent = true;
                 newper.IsAdmin = false;
@@ -390,7 +394,7 @@ namespace kindergarden.Controllers
             if (ModelState.IsValid)
             {
                 Person newper = new Person();
-                newper.Gsm = per.Gsm;
+                //newper.Gsm = per.Gsm;
                 newper.IsActive = true;
                 newper.IsParent = false;
                 newper.IsAdmin = false;
@@ -581,6 +585,29 @@ namespace kindergarden.Controllers
         {
             if (System.IO.File.Exists(Server.MapPath(filePath)))
             { System.IO.File.Delete(Server.MapPath(filePath)); }
+        }
+
+        public void SendAcceptNotificationEmailToUser(string email)
+        {
+            MailMessage ePosta = new MailMessage();
+            ePosta.From = new MailAddress("info@kita365.de");
+            ePosta.To.Add(email);
+            ePosta.Subject = "Willkommen bei Kita365";
+            ePosta.Body = @"<h3>Ihr Account wurde Freigeschaltet, wir wünschen Ihnen viel Spaß bei der Benutzung.</h3>";
+            ePosta.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            NetworkCredential networkCredential = new NetworkCredential("info@kita365.de", "Kita123?");
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = networkCredential;
+            smtp.Port = 587;
+            smtp.Host = "smtp.ionos.de";
+            smtp.EnableSsl = true;
+            object userState = ePosta;
+            try { smtp.Send(ePosta); }
+            catch (Exception e)
+            {
+                string hata = e.Message;
+            }
         }
         protected override void Dispose(bool disposing)
         {

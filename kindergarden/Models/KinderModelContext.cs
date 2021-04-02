@@ -23,7 +23,7 @@ namespace kindergarden
         public virtual DbSet<gallery> gallery { get; set; }
         public virtual DbSet<galleryImage> galleryimage { get; set; }
         public virtual DbSet<CalendarActivity> CalendarActivities { get; set; }
-        public virtual DbSet<Address> Addresses { get; set; }
+        //public virtual DbSet<Address> Addresses { get; set; }
 
     }
 }

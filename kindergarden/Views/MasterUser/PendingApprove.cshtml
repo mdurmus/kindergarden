@@ -16,7 +16,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>GSM</th>
+                            
                             <th>Password</th>
                             <th>Process</th>
                         </tr>
@@ -26,7 +26,6 @@
                                 <td>@item.Id</td>
                                 <td>@item.Name @item.LastName</td>
                                 <td>@item.Email</td>
-                                <td><a href="tel:@item.Gsm" target="_blank">@item.Gsm</a></td>
                                 <td>@item.Pass</td>
                                 <td>
                                     @Html.ActionLink("Approve", "ApproveAdmin", "MasterUser", new { Id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" })

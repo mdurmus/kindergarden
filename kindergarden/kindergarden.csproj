@@ -178,6 +178,10 @@
     <Compile Include="Migrations\202103081757252_AddActiveUserSupport.designer.cs">
       <DependentUpon>202103081757252_AddActiveUserSupport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104021433362_RemovedPersonalAddressDetailDtoAndGsmInfo.cs" />
+    <Compile Include="Migrations\202104021433362_RemovedPersonalAddressDetailDtoAndGsmInfo.designer.cs">
+      <DependentUpon>202104021433362_RemovedPersonalAddressDetailDtoAndGsmInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActiveUser.cs" />
     <Compile Include="Models\Address.cs" />
@@ -498,6 +502,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103081757252_AddActiveUserSupport.resx">
       <DependentUpon>202103081757252_AddActiveUserSupport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104021433362_RemovedPersonalAddressDetailDtoAndGsmInfo.resx">
+      <DependentUpon>202104021433362_RemovedPersonalAddressDetailDtoAndGsmInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

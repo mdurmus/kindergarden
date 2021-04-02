@@ -15,7 +15,7 @@ namespace kindergarden.Models
             insertMasterAddress(context, masterId);
             insertAdminAddress(context, adminId);
             insertTeacherAddress(context, teacherId);
-            insertParentAddress(context, parentId);
+           // insertParentAddress(context, parentId);
             base.Seed(context);
         }
 
@@ -28,7 +28,7 @@ namespace kindergarden.Models
             address.State = "007";
             address.Street = "007";
             address.City = "007";
-            context.Addresses.Add(address);
+          //  context.Addresses.Add(address);
             context.SaveChanges();
         }
 
@@ -36,7 +36,7 @@ namespace kindergarden.Models
         {
             Person first = new Person();
             first.CreatedDate = DateTime.Now;
-            first.Gsm = "123";
+           // first.Gsm = "123";
             first.IsActive = true;
             first.IsParent = true;
             first.LastName = "parent";
@@ -59,7 +59,7 @@ namespace kindergarden.Models
             address.State = "007";
             address.Street = "007";
             address.City = "007";
-            context.Addresses.Add(address);
+          //  context.Addresses.Add(address);
             context.SaveChanges();
         }
 
@@ -67,7 +67,7 @@ namespace kindergarden.Models
         {
             Person first = new Person();
             first.CreatedDate = DateTime.Now;
-            first.Gsm = "123";
+           // first.Gsm = "123";
             first.IsActive = true;
             first.IsTeacher = true;
             first.LastName = "teacher";
@@ -90,7 +90,7 @@ namespace kindergarden.Models
             address.State = "007";
             address.Street = "007";
             address.City = "007";
-            context.Addresses.Add(address);
+          //  context.Addresses.Add(address);
             context.SaveChanges();
         }
 
@@ -98,7 +98,7 @@ namespace kindergarden.Models
         {
             Person first = new Person();
             first.CreatedDate = DateTime.Now;
-            first.Gsm = "123";
+           // first.Gsm = "123";
             first.IsActive = true;
             first.IsAdmin = true;
             first.IsMaster = false;
@@ -122,7 +122,7 @@ namespace kindergarden.Models
             address.State = "007";
             address.Street = "007";
             address.City = "007";
-            context.Addresses.Add(address);
+           // context.Addresses.Add(address);
             context.SaveChanges();
         }
 
@@ -130,7 +130,7 @@ namespace kindergarden.Models
         {
             Person first = new Person();
             first.CreatedDate = DateTime.Now;
-            first.Gsm = "123";
+          //  first.Gsm = "123";
             first.IsActive = true;
             first.IsAdmin = false;
             first.IsMaster = true;
