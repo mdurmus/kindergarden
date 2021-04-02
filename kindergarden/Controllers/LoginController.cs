@@ -38,7 +38,7 @@ namespace kindergarden.Controllers
             {
                 //false ise login olunmus demektir.
                 bool result = CheckUserLogedIn(model.Id);
-               if (result == true)
+                if (result == true)
                 {
                     if (model.Addresses.Count() == 0)
                     {
@@ -105,7 +105,7 @@ namespace kindergarden.Controllers
         {
             bool result = false;
             var model = db.ActiveUser.Where(p => p.UserId == id).FirstOrDefault();
-           
+
             if (model == null)
                 result = true;
             else
@@ -180,7 +180,7 @@ namespace kindergarden.Controllers
                 db.ActiveUser.Remove(model);
                 db.SaveChanges();
             }
-          
+
         }
 
         public ActionResult Thanks(string person)
@@ -240,6 +240,32 @@ namespace kindergarden.Controllers
             catch (Exception) { }
         }
 
+        
+        public void SendEmailToUser(string email)
+        {
+            MailMessage ePosta = new MailMessage();
+            ePosta.From = new MailAddress("info@kita365.de");
+            ePosta.To.Add("bykingpin@gmail.com");
+            ePosta.To.Add("heuseyin1986@gmail.com");
+            ePosta.Subject = "Willkommen bei Kita365";
+            ePosta.Body = @"<h3>Ihr Account wurde Freigeschaltet, wir wünschen Ihnen viel Spaß bei der Benutzung.</h3>";
+            ePosta.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            NetworkCredential networkCredential = new NetworkCredential("info@kita365.de", "Kita123?");
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = networkCredential;
+            smtp.Port = 587;
+            smtp.Host = "smtp.ionos.de";
+            smtp.EnableSsl = true;
+            object userState = ePosta;
+            try { smtp.Send(ePosta); }
+            catch (Exception e) {
+                string hata = e.Message;
+            }
+        }
+
+
+
         [NonAction]
         private void CreatePerson(Person person, int schoolId)
         {
@@ -285,6 +311,7 @@ namespace kindergarden.Controllers
                 model.SchoolId = schoolId;
                 db.person.Add(model);
                 db.SaveChanges();
+                SendEmailToUser(model.Email);
                 return RedirectToAction("Thanks", new { person = model.Name + " " + model.LastName });
             }
             ModelState.AddModelError("GUID", "Bitte prüfen Aktivierungsschlüssel");
@@ -304,6 +331,7 @@ namespace kindergarden.Controllers
                 model.SchoolId = schoolId;
                 db.person.Add(model);
                 db.SaveChanges();
+                SendEmailToUser(model.Email);
                 return RedirectToAction("Thanks", new { person = model.Name + " " + model.LastName });
             }
             ModelState.AddModelError("GUID", "Bitte prüfen Aktivierungsschlüssel");
@@ -328,6 +356,7 @@ namespace kindergarden.Controllers
                 model.SchoolId = schoolId;
                 db.person.Add(model);
                 db.SaveChanges();
+                SendEmailToUser(model.Email);
                 return RedirectToAction("Thanks", new { person = model.Name + "" + model.LastName });
             }
             ModelState.AddModelError("GUID", "Bitte prüfen Aktivierungsschlüssel");
